@@ -1,15 +1,17 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import Appbar from './appbar';
 import HeaderSlider from './headerSlider';
 import UserData from './userInfo';
 import {axiosClient, HOME} from '../../config/api';
 import SpinnerComponent from '../../components/SpinnerComponent';
+import {AuthContext} from '../../config/authContext';
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [state] = useContext(AuthContext);
 
   useEffect(() => {
     fetchData();
