@@ -33,13 +33,11 @@ export default function LogInScreen({navigation}) {
       const {data, status} = await axiosClient.post(LOGIN, body);
       setLoading(false);
       showToast('success', data.message);
+      navigation.goBack();
       if (status == 200) {
         setState(data);
         _storeInToAsyncStorage('user', JSON.stringify(data));
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'home'}],
-        });
+        navigation.goBack();
       }
     } catch (error) {
       setLoading(false);

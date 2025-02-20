@@ -2,8 +2,10 @@ import {View, Image, StyleSheet, Text, Pressable} from 'react-native';
 import React from 'react';
 import RoundButtonComp from '../../components/RoundButtonComp';
 import SocialMediaButton from '../../components/SocialMediaButton';
+import {useNavigation} from '@react-navigation/native';
 
-export default function WelcomeScreen({navigation}) {
+export default function WelcomeScreen() {
+  const navigation = useNavigation();
   const loginPressed = () => {
     navigation.navigate('logIn');
   };
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
   },
 
   otherOption: {
-    marginTop: '15%',
+    marginTop: '10%',
     textAlign: 'center',
     fontSize: 14,
     color: 'grey',
