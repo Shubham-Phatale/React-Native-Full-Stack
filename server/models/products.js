@@ -4,21 +4,36 @@ const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please add name"],
       trim: true,
     },
+    description: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    details: [
+      {
+        key: {
+          type: String,
+          required: true,
+        },
+        value: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     category: {
       type: String,
-      required: [true, "Please add category"],
       trim: true,
     },
     price: {
       type: Number,
-      required: [true, "Please add the price"],
+      required: true,
     },
-    imageUrl: {
+    images: {
       type: [String],
-      required: [true, "Please add at least one image URL"],
+      required: true,
     },
     isRecommended: {
       type: Boolean,
@@ -32,9 +47,19 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    Ratings: {
+    ratings: {
       type: Number,
+      min: 0,
+      max: 5,
       default: 0,
+    },
+    manufacturer: {
+      type: String,
+      required: true,
+    },
+    website: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

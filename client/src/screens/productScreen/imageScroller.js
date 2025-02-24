@@ -15,7 +15,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import {PRIMARYCOLOR} from '../../utils/constatns';
+import {PRIMARYCOLOR} from '../../utils/constants';
 import {useNavigation} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');

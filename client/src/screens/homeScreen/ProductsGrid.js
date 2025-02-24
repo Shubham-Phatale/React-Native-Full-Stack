@@ -69,7 +69,7 @@ const ProductGrid = ({recommended, trending, topProducts}) => {
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => onPressProduct(item._id)}>
             <View style={styles.cardView}>
-              <Image source={{uri: item.imageUrl[0]}} style={styles.image} />
+              <Image source={{uri: item.images[0]}} style={styles.image} />
               <View style={styles.itemDetails}>
                 <Text
                   style={styles.name}
