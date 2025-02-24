@@ -33,7 +33,6 @@ export default function LogInScreen({navigation}) {
       const {data, status} = await axiosClient.post(LOGIN, body);
       setLoading(false);
       showToast('success', data.message);
-      navigation.goBack();
       if (status == 200) {
         setState(data);
         _storeInToAsyncStorage('user', JSON.stringify(data));
@@ -115,6 +114,7 @@ export default function LogInScreen({navigation}) {
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
+    width: '100%',
   },
 
   bgImageView: {

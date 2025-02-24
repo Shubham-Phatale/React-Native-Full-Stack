@@ -9,3 +9,4 @@ export const axiosClient = axios.create({
 export const REGISTER = '/auth/register';
 export const LOGIN = '/auth/login';
 export const HOME = '/home';
+export const PRODUCT = '/product';

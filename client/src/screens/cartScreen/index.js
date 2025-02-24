@@ -1,21 +1,25 @@
 import {View, Text, Modal, StyleSheet} from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {AuthContext} from '../../config/authContext';
-import LogInScreen from '../logIn'; // Import the Login Screen
-import WelcomeScreen from '../welcome';
+import LogInScreen from '../logIn';
 
 const CartScreen = () => {
   const [state] = useContext(AuthContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // If the user is not logged in, show the login modal
+  useEffect(() => {
+    if (state.user) {
+      setShowLoginModal(false);
+    }
+  }, [state.user]);
+
   if (state.user === undefined) {
     return (
       <View style={styles.container}>
-        {/* Cart Screen UI */}
-        <Text>Cart is empty or you need to log in to view your cart.</Text>
+        <Text style={{fontSize: 18, fontFamily: 'Poppins-Regular'}}>
+          Log in to view your cart.
+        </Text>
 
-        {/* Display LoginModal if the user is not logged in */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -26,7 +30,6 @@ const CartScreen = () => {
           </View>
         </Modal>
 
-        {/* Button to open LoginScreen */}
         <Text style={styles.loginText} onPress={() => setShowLoginModal(true)}>
           Login to proceed
         </Text>
@@ -34,10 +37,11 @@ const CartScreen = () => {
     );
   }
 
-  // Render normal Cart Screen if the user is logged in
   return (
-    <View>
-      <Text>CartScreen</Text>
+    <View style={styles.cartContainer}>
+      <Text style={{fontSize: 22, fontFamily: 'Poppins-Regular'}}>
+        Welcome to your Cart!
+      </Text>
     </View>
   );
 };
@@ -45,12 +49,19 @@ const CartScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  cartContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f9f9f9',
+  },
   loginText: {
     color: 'blue',
-    marginTop: 20,
+    marginTop: 10,
     textDecorationLine: 'underline',
   },
   modalContainer: {

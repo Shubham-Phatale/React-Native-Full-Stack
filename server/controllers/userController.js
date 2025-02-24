@@ -1,33 +1,33 @@
 const { hashPassword, comparePassword } = require("../helpers/authHelpers");
-const userModel = require("../models/userModel");
+const UserModel = require("../models/userModel");
 const JWT = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name) {
-      return res.status(400).send({
-        sucess: false,
+      return res.status(400).json({
+        success: false,
         message: "Name is Required!",
       });
     }
 
     if (!email) {
-      return res.status(400).send({
-        sucess: false,
+      return res.status(400).json({
+        success: false,
         message: "Email is Required!",
       });
     }
 
     if (!password) {
-      return res.status(400).send({
+      return res.status(400).json({
         success: false,
         message: "Password is required!",
       });
     }
 
     if (password.length < 6 || password.length > 16) {
-      return res.status(400).send({
+      return res.status(400).json({
         success: false,
         message: "Password should be between 6 to 16 characters long",
       });
@@ -35,10 +35,10 @@ const registerController = async (req, res) => {
 
     //check existing User
 
-    const existingUSer = await userModel.findOne({ email });
+    const existingUSer = await UserModel.findOne({ email });
     if (existingUSer) {
-      return res.status(500).send({
-        sucess: false,
+      return res.status(500).json({
+        success: false,
         message: "User is already registered with this email",
       });
     }
@@ -47,20 +47,20 @@ const registerController = async (req, res) => {
     const hashedPasword = await hashPassword(password);
 
     //save user to DB
-    const user = await userModel({
+    const user = await UserModel({
       name,
       email,
       password: hashedPasword,
     }).save();
 
-    res.status(200).send({
-      sucess: true,
+    res.status(200).json({
+      success: true,
       message: "User registered successfully",
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).send({
-      sucess: false,
+    return res.status(500).json({
+      success: false,
       message: "server Down please try again later!",
       error,
     });
@@ -71,17 +71,17 @@ const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).send({
-        sucess: false,
+      return res.status(400).json({
+        success: false,
         message: "please provide Email or Password",
       });
     }
 
-    const user = await userModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
-      return res.status(400).send({
-        sucess: false,
+      return res.status(400).json({
+        success: false,
         message: "User Not Found",
       });
     }
@@ -91,8 +91,8 @@ const loginController = async (req, res) => {
     const match = await comparePassword(password, user.password);
 
     if (!match) {
-      return res.status(400).send({
-        sucess: false,
+      return res.status(400).json({
+        success: false,
         message: "Invalid email or Password",
       });
     }
@@ -104,16 +104,16 @@ const loginController = async (req, res) => {
     // set password as undefined
     user.password = undefined;
 
-    res.status(200).send({
-      sucess: true,
+    res.status(200).json({
+      success: true,
       message: "Logged in successfully",
       token,
       user,
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).send({
-      sucess: false,
+    return res.status(500).json({
+      success: false,
       message: "server Down please try again later!",
       error,
     });

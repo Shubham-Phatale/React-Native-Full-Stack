@@ -4,8 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const colors = require("colors");
 const connectToDB = require("./config/db");
-const userRoutes = require("./routes/userRoutes");
-const homeRoutes = require("./routes/homeRoutes");
+
+const apiRouter = require("./config/router");
 
 dotenv.config();
 
@@ -17,8 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use("/api/v1/auth", userRoutes);
-app.use("/api/v1", homeRoutes);
+app.use("/api/v1", apiRouter);
 
 const PORT = process.env.PORT || 8080;
 

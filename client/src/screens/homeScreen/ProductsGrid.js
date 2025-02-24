@@ -8,12 +8,18 @@ import {
   Image,
 } from 'react-native';
 import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('window');
 const categories = ['Recommended', 'Trending', 'TopProducts'];
 
 const ProductGrid = ({recommended, trending, topProducts}) => {
+  const navigation = useNavigation();
   const [selectedItem, setSelectedItem] = useState('Recommended');
+
+  const onPressProduct = productId => {
+    navigation.navigate('productDetails', {productId});
+  };
 
   const getProductData = () => {
     switch (selectedItem) {
@@ -32,6 +38,7 @@ const ProductGrid = ({recommended, trending, topProducts}) => {
         <FlatList
           data={categories}
           keyExtractor={item => item}
+          scrollEnabled={false}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
@@ -56,18 +63,24 @@ const ProductGrid = ({recommended, trending, topProducts}) => {
       <FlatList
         data={getProductData()}
         keyExtractor={item => item._id}
+        scrollEnabled={false}
         numColumns={2}
         columnWrapperStyle={styles.row}
         renderItem={({item}) => (
-          <View style={styles.cardView}>
-            <Image source={{uri: item.imageUrl[0]}} style={styles.image} />
-            <View style={styles.itemDetails}>
-              <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-                {item.name}
-              </Text>
-              <Text style={styles.price}>${item.price}</Text>
+          <TouchableOpacity onPress={() => onPressProduct(item._id)}>
+            <View style={styles.cardView}>
+              <Image source={{uri: item.imageUrl[0]}} style={styles.image} />
+              <View style={styles.itemDetails}>
+                <Text
+                  style={styles.name}
+                  numberOfLines={1}
+                  ellipsizeMode="tail">
+                  {item.name}
+                </Text>
+                <Text style={styles.price}>${item.price}</Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>

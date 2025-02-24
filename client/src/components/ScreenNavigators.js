@@ -9,6 +9,7 @@ import SplashScreen from '../screens/splash';
 import WelcomeScreen from '../screens/welcome';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProductDetails from '../screens/productScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,6 +73,7 @@ const ScreenNavigators = () => {
       <Stack.Screen name="signUp" component={SignUpScreen} />
       <Stack.Screen name="logIn" component={LogInScreen} />
       <Stack.Screen name="home" component={HomeTabs} />
+      <Stack.Screen name="productDetails" component={ProductDetails} />
     </Stack.Navigator>
   );
 };
