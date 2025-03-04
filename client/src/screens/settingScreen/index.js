@@ -92,7 +92,7 @@ const SettingScreen = () => {
       <Text style={styles.header}>Settings</Text>
       <FlatList
         data={settingsOptions}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.title}
         renderItem={({item}) => (
           <TouchableOpacity style={styles.card} onPress={item.action}>
             <Image style={styles.cardImage} source={item.image} />

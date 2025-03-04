@@ -8,13 +8,16 @@ import SocialMediaButton from '../../components/SocialMediaButton';
 import {axiosClient, LOGIN} from '../../config/api';
 import {_storeInToAsyncStorage} from '../../config/asyncStorage';
 import {showToast} from '../../components/ToastComponent';
+import {useNavigation} from '@react-navigation/native';
 
-export default function LogInScreen({navigation}) {
+export default function LogInScreen() {
   const [state, setState] = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
 
   const logInPressed = async () => {
     if (email == '' || pass == '') {
@@ -87,7 +90,7 @@ export default function LogInScreen({navigation}) {
           Forgot Password?
         </Text>
         <View style={styles.buttonView}>
-          <RoundButtonComp lable={'Login'} onPressed={() => logInPressed()} />
+          <RoundButtonComp label={'Login'} onPressed={() => logInPressed()} />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.text}>Don't have an account? </Text>

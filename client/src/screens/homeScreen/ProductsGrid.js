@@ -18,7 +18,7 @@ const ProductGrid = ({recommended, trending, topProducts}) => {
   const [selectedItem, setSelectedItem] = useState('Recommended');
 
   const onPressProduct = productId => {
-    navigation.navigate('productDetails', {productId});
+    navigation.navigate('ProductDetailScreen', {productId});
   };
 
   const getProductData = () => {

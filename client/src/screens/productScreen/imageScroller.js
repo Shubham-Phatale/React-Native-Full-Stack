@@ -17,6 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {PRIMARYCOLOR} from '../../utils/constants';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('window');
 
@@ -68,50 +69,54 @@ const ImageScroller = ({images}) => {
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
 
-      <View style={styles.heartContainer}>
-        <TouchableOpacity onPress={() => setLiked(!liked)}>
-          <Ionicons
-            name={liked ? 'heart' : 'heart-outline'}
-            size={24}
-            color={liked ? 'red' : 'black'}
-          />
-        </TouchableOpacity>
-      </View>
+      <LinearGradient
+        colors={['rgba(0,0,0,0.1)', 'transparent']}
+        style={styles.linearBG}>
+        <View style={styles.heartContainer}>
+          <TouchableOpacity onPress={() => setLiked(!liked)}>
+            <Ionicons
+              name={liked ? 'heart' : 'heart-outline'}
+              size={24}
+              color={liked ? 'red' : 'white'}
+            />
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.backContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back-outline" size={24} />
-        </TouchableOpacity>
-      </View>
+        <View style={styles.backContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back-outline" size={24} color={'black'} />
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.paginationContainerOnImage}>
-        {images.map((_, index) => {
-          const paginationStyle = useAnimatedStyle(() => {
-            const dotWidth = interpolate(
-              scrollX.value,
-              [(index - 1) * width, index * width, (index + 1) * width],
-              [8, 20, 8],
-              Extrapolation.CLAMP,
+        <View style={styles.paginationContainerOnImage}>
+          {images.map((_, index) => {
+            const paginationStyle = useAnimatedStyle(() => {
+              const dotWidth = interpolate(
+                scrollX.value,
+                [(index - 1) * width, index * width, (index + 1) * width],
+                [8, 20, 8],
+                Extrapolation.CLAMP,
+              );
+
+              return {
+                width: dotWidth,
+              };
+            });
+            return (
+              <Animated.View
+                key={index}
+                style={[
+                  styles.dotStyle,
+                  paginationStyle,
+                  {
+                    backgroundColor:
+                      paginationIndex === index ? PRIMARYCOLOR : '#aaa',
+                  },
+                ]}></Animated.View>
             );
-
-            return {
-              width: dotWidth,
-            };
-          });
-          return (
-            <Animated.View
-              key={index}
-              style={[
-                styles.dotStyle,
-                paginationStyle,
-                {
-                  backgroundColor:
-                    paginationIndex === index ? PRIMARYCOLOR : '#aaa',
-                },
-              ]}></Animated.View>
-          );
-        })}
-      </View>
+          })}
+        </View>
+      </LinearGradient>
     </View>
   );
 };
@@ -125,6 +130,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     position: 'absolute',
     alignSelf: 'flex-start',
+  },
+
+  linearBG: {
+    position: 'absolute',
+    width: width,
+    height: height * 0.35,
   },
 
   heartContainer: {

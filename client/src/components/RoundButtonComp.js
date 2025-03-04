@@ -1,13 +1,13 @@
 import {StyleSheet, Text, Pressable} from 'react-native';
 import React from 'react';
 
-export default function RoundButtonComp({lable, isBorder = false, onPressed}) {
+export default function RoundButtonComp({label, isBorder = false, onPressed}) {
   return (
     <Pressable
       style={isBorder ? styles.outlinedButton : styles.filledButton}
       onPress={() => onPressed()}>
       <Text style={[styles.buttonText, isBorder && {color: '#000000'}]}>
-        {lable}
+        {label || ''}
       </Text>
     </Pressable>
   );

@@ -2,6 +2,7 @@ import {View, Text, Modal, StyleSheet} from 'react-native';
 import React, {useContext, useState, useEffect} from 'react';
 import {AuthContext} from '../../config/authContext';
 import LogInScreen from '../logIn';
+import LoginModal from '../../components/LoginModal';
 
 const CartScreen = () => {
   const [state] = useContext(AuthContext);
@@ -13,22 +14,18 @@ const CartScreen = () => {
     }
   }, [state.user]);
 
-  if (state.user === undefined) {
+  if (state.user === undefined || state.user === null) {
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 18, fontFamily: 'Poppins-Regular'}}>
           Log in to view your cart.
         </Text>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
+        <LoginModal
           visible={showLoginModal}
-          onRequestClose={() => setShowLoginModal(false)}>
-          <View style={styles.modalContainer}>
-            <LogInScreen onLoginSuccess={() => setShowLoginModal(false)} />
-          </View>
-        </Modal>
+          onClose={() => setShowLoginModal(false)}
+          onLoginSuccess={() => setShowLoginModal(false)}
+        />
 
         <Text style={styles.loginText} onPress={() => setShowLoginModal(true)}>
           Login to proceed
@@ -63,12 +60,6 @@ const styles = StyleSheet.create({
     color: 'blue',
     marginTop: 10,
     textDecorationLine: 'underline',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

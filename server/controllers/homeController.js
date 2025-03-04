@@ -17,7 +17,10 @@ const homeController = async (req, res) => {
     });
   } catch (err) {
     console.log("Error in products");
-    res.status(500).json({ message: err.message });
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
